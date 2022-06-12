@@ -1,0 +1,40 @@
+###Hello World
+POST {{funcUrl}}/api/hello-world?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Bablu"
+}
+
+###Get SQL Dedicated Pool
+POST {{funcUrl}}/api/get-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "subscriptionId": "edf6dd9d-7c4a-4bca-a997-945f3d60cf4e",
+  "resourceGroupName": "azdemo101-rg-zrlx4",
+  "workspaceName": "azsynapsewksxqwjeq",
+  "sqlPoolName": "sqldp01"
+}
+
+###Pause SQL Dedicated Pool
+POST {{funcUrl}}/api/pause-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "subscriptionId": "edf6dd9d-7c4a-4bca-a997-945f3d60cf4e",
+  "resourceGroupName": "azdemo101-rg-zrlx4",
+  "workspaceName": "azsynapsewksxqwjeq",
+  "sqlPoolName": "sqldp01"
+}
+
+###Resume SQL Dedicated Pool
+POST {{funcUrl}}/api/resume-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "subscriptionId": "edf6dd9d-7c4a-4bca-a997-945f3d60cf4e",
+  "resourceGroupName": "azdemo101-rg-zrlx4",
+  "workspaceName": "azsynapsewksxqwjeq",
+  "sqlPoolName": "sqldp01"
+}
