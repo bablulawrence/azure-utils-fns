@@ -21,7 +21,7 @@ def main(params: Params) -> str:
                     query=query,
                     subscriptions=[subscription_id])
             query_response = resourcegraph_client.resources(query)
-            return f'query reponse : {query_response}'
+            return { "data": query_response.data }
         except Exception as e:
             logging.exception(e)
             return str(e)

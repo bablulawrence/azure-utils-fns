@@ -15,7 +15,7 @@ def main(params: Params) -> str:
             cred = DefaultAzureCredential()
             mgmt_client = SynapseManagementClient(cred, subscription_id, base_url)        
             result = mgmt_client.sql_pools.begin_pause(resource_group_name, workspace_name, sql_pool_name)
-            return f'Status of pause operation on SQL dedicated pool "{ sql_pool_name}" : "{ result.status() }".'
+            return { "sql_pool_name": sql_pool_name, "sql_pool_status": result.status() }
         except Exception as e:
             logging.exception(e)
             return str(e)
