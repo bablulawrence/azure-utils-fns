@@ -1,5 +1,6 @@
 aiohttp
 azure-functions
+azure-functions-durable
 azure-identity
 azure-synapse-artifacts
 azure-mgmt-synapse
