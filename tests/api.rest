@@ -1,5 +1,5 @@
 ###Hello World
-POST {{funcUrl}}/api/hello-world?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-hello-world?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
 }
 
 ###Get SQL Dedicated Pool
-POST {{funcUrl}}/api/get-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-get-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ###Pause SQL Dedicated Pool
-POST {{funcUrl}}/api/pause-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-pause-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
@@ -29,7 +29,7 @@ Content-Type: application/json
 }
 
 ###Resume SQL Dedicated Pool
-POST {{funcUrl}}/api/resume-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-resume-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
