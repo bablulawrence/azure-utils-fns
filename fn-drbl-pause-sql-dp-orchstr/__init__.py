@@ -1,22 +1,22 @@
-# This function is not intended to be invoked directly. Instead it will be
-# triggered by an HTTP starter function.
-# Before running this sample, please:
-# - create a Durable activity function (default name is "Hello")
-# - create a Durable HTTP starter function
-# - add azure-functions-durable to requirements.txt
-# - run pip install -r requirements.txt
-
 import logging
 import json
-
+from collections import namedtuple
 import azure.functions as func
 import azure.durable_functions as df
 
-
 def orchestrator_function(context: df.DurableOrchestrationContext):
-    result1 = yield context.call_activity('fn-drbl-pause-sql-dp-activity', "Tokyo")
-    result2 = yield context.call_activity('fn-drbl-pause-sql-dp-activity', "Seattle")
-    result3 = yield context.call_activity('fn-drbl-pause-sql-dp-activity', "London")
-    return [result1, result2, result3]
+
+    Params = namedtuple('Params', ['subscriptionId', 'resourceGroupName', 
+                                'workspaceName', 'sqlPoolName'])
+    
+    params = Params(subscriptionId ='edf6dd9d-7c4a-4bca-a997-945f3d60cf4e', 
+                     resourceGroupName = 'azdemo101-rg-zrlx4',
+                     workspaceName= 'azsynapsewksxqwjeq',
+                     sqlPoolName= 'sqldp01')
+
+    result1 = yield context.call_activity('fn-drbl-pause-sql-dp-activity', params)
+    # result2 = yield context.call_activity('fn-drbl-pause-sql-dp-activity', "Seattle")
+    # result3 = yield context.call_activity('fn-drbl-pause-sql-dp-activity', "London")
+    return [result1]
 
 main = df.Orchestrator.create(orchestrator_function)
