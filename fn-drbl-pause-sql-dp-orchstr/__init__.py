@@ -28,11 +28,10 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
     
     if (subscription_id):
         #Get the list of dedicated pools in the subscription
-        query= 'project id, name, type, properties.status, resourceGroup | where type =~ "microsoft.synapse/workspaces/sqlpools"'
+        query= 'project id, name, type, status=properties.status, resourceGroup | where type =~ "microsoft.synapse/workspaces/sqlpools"'
         res_query_params = ResQueryParams(subscriptionId=subscription_id, query=query)
         query_result = yield context.call_activity('fn-drbl-query-resource-graph-activity', res_query_params)
         sqldp_list = query_result['data']
-
         #Pause the dedicated pools
         sqldp_params_list = get_sqldp_params_list(subscription_id, sqldp_list)
         sqldp_result_tasks = [ context.call_activity('fn-drbl-pause-sql-dp-activity', sqldp_params) for sqldp_params in sqldp_params_list]
