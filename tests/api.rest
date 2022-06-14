@@ -1,13 +1,21 @@
 ###Hello World
-POST {{funcUrl}}/api/hello-world?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-hello-world?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
   "name": "Bablu"
 }
 
+###Durable HTTP starter
+POST {{funcUrl}}/api/orchestrators/fn-drbl-pause-sql-dp-orchstr?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "subscriptionId" : "edf6dd9d-7c4a-4bca-a997-945f3d60cf4e" 
+}
+
 ###Get SQL Dedicated Pool
-POST {{funcUrl}}/api/get-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-get-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
@@ -18,7 +26,7 @@ Content-Type: application/json
 }
 
 ###Pause SQL Dedicated Pool
-POST {{funcUrl}}/api/pause-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-pause-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
@@ -29,7 +37,7 @@ Content-Type: application/json
 }
 
 ###Resume SQL Dedicated Pool
-POST {{funcUrl}}/api/resume-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
+POST {{funcUrl}}/api/fn-resume-sql-dedicated-pool?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
@@ -38,3 +46,22 @@ Content-Type: application/json
   "workspaceName": "azsynapsewksxqwjeq",
   "sqlPoolName": "sqldp01"
 }
+
+###Publish Event Grid Event
+POST {{eventGridUrl}}/api/events?overload=EventGridEvent&api-version=2018-01-01 HTTP/1.1
+aeg-sas-key: {{eventGridKey}}
+Content-Type: application/json
+
+[
+  {
+    "id": "b3ccc7e3-c1cb-49bf-b7c8-0d4e60980616",
+    "subject": "TestSubject",
+    "data": {
+      "Property1": "Value1",
+      "Property2": "Value2"
+    },
+    "eventType": "Microsoft.Contoso.TestEvent",
+    "eventTime": "2017-12-04T22:06:09.147165Z",
+    "dataVersion": "1.0"
+  }
+]
