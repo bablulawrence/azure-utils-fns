@@ -7,8 +7,7 @@ from azure.identity import DefaultAzureCredential
 Params = namedtuple('Params', ['subscriptionId', 'query'])
 
 def main(params: Params) -> str:
-    logging.info('Starting execution')   
-    #return 'Hello'
+    logging.info('Starting execution of activity function')   
     subscription_id, query = params    
     if (subscription_id and query):
         try: 
