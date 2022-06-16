@@ -8,7 +8,7 @@ Params = namedtuple('Params', ['subscriptionId', 'resourceGroupName',
                                 'workspaceName', 'sqlPoolName'])
 
 def main(params: Params) -> str:
-    logging.info('Starting execution')   
+    logging.info('Starting execution of the activity function')   
     base_url = 'https://management.azure.com'
     subscription_id, resource_group_name, workspace_name, sql_pool_name = params    
     if (subscription_id and resource_group_name and workspace_name and sql_pool_name):
