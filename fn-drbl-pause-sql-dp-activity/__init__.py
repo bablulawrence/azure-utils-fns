@@ -1,6 +1,5 @@
 import logging
 from collections import namedtuple
-from re import L
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.synapse import SynapseManagementClient
 
