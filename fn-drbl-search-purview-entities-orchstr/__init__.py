@@ -16,7 +16,7 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
         if 'limit' in input:
             limit = input['limit']
         else: 
-            limit = 10
+            limit = 100
         
         if 'search_filter' in input:
             search_filter = input['search_filter']
