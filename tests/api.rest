@@ -6,13 +6,22 @@ Content-Type: application/json
   "name": "Bablu"
 }
 
-###Durable HTTP starter
+###Durable HTTP starter for delete Purview entities
+POST {{funcUrl}}/api/orchestrators/fn-drbl-delete-purview-entities-orchstr?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "accountName" : "azdemo103mfek9-pv101",
+  "query": "adworks"   
+}
+
+###Durable HTTP starter for search Purview entities
 POST {{funcUrl}}/api/orchestrators/fn-drbl-search-purview-entities-orchstr?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
-  "accountName" : "azdemo103mfek9-pv",
-  "query": "*"   
+  "accountName" : "azdemo103mfek9-pv101",
+  "query": "adworks"   
 }
 
 ###Durable HTTP starter for SQL dedicated pool pause
