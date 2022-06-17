@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
   "accountName" : "azdemo103mfek9-pv101",
-  "query": "adworks"   
+  "query": "sdfsdsf"   
 }
 
 ###Durable HTTP starter for search Purview entities
@@ -21,7 +21,8 @@ Content-Type: application/json
 
 {
   "accountName" : "azdemo103mfek9-pv101",
-  "query": "adworks"   
+  "query": "adworks",
+  "limit": 10   
 }
 
 ###Durable HTTP starter for SQL dedicated pool pause
