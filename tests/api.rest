@@ -7,12 +7,24 @@ Content-Type: application/json
 }
 
 ###Durable HTTP starter for delete Purview entities
+POST {{funcUrl}}/api/fn-get-query-sql-db?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "server" : "pvlab-fe00b4-synapse.sql.azuresynapse.net",
+  "database" : "sqldp01",
+  "output" : "stats",
+  "query": "SELECT TOP 3 * FROM Sales.Customer;"
+}
+
+###Durable HTTP starter for delete Purview entities
 POST {{funcUrl}}/api/orchestrators/fn-drbl-delete-purview-entities-orchstr?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
   "accountName" : "azdemo103mfek9-pv101",
-  "query": "sdfsdsf"   
+  "query": "*",
+  "limit": 100   
 }
 
 ###Durable HTTP starter for search Purview entities
@@ -21,8 +33,7 @@ Content-Type: application/json
 
 {
   "accountName" : "azdemo103mfek9-pv101",
-  "query": "adworks",
-  "limit": 10   
+  "query": "adworks"   
 }
 
 ###Durable HTTP starter for SQL dedicated pool pause
