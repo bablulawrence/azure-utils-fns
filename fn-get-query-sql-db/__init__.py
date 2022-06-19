@@ -54,7 +54,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                     return func.HttpResponse(json.dumps(rows), status_code=200)
                 elif (output == 'stats'):
                     start_time = time()
-                    rows = execute_query(cursor, query)
+                    execute_query(cursor, query)
                     end_time = time()
                     return func.HttpResponse(json.dumps({ "executionTime" : end_time - start_time }),
                                          status_code = 200) 
