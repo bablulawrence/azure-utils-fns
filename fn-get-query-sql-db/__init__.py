@@ -44,9 +44,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         func.HttpResponse("One or more required parameters are missing", status_code = 400)
 
     conn_string = f"DRIVER={driver};SERVER={server};DATABASE={database}"
-    access_token = get_access_token()
     SQL_COPT_SS_ACCESS_TOKEN = 1256
     try:
+        access_token = get_access_token()
         with pyodbc.connect(conn_string, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: access_token}) as conn:
             with conn.cursor() as cursor:
                 if (output == 'json'):
