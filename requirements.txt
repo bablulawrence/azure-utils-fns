@@ -7,3 +7,4 @@ azure-mgmt-synapse
 azure-mgmt-resourcegraph
 pyapacheatlas
 pyodbc
+azure-mgmt-compute

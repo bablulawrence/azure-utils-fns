@@ -13,8 +13,8 @@ Content-Type: application/json
 {
   "server" : "pvlab-fe00b4-synapse.sql.azuresynapse.net",
   "database" : "sqldp01",
-  "output" : "json",
-  "load": 10,
+  "output" : "stats",
+  "load": 10000,
   "query": "SELECT TOP 3 * FROM Sales.Customer;"
 }
 
@@ -46,6 +46,14 @@ Content-Type: application/json
 {
   "accountName" : "azdemo103mfek9-pv101",
   "query": "adworks"   
+}
+
+###Durable HTTP starter for VM stop
+POST {{funcUrl}}/api/orchestrators/fn-drbl-stop-vm-orchstr?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "subscriptionId" : "edf6dd9d-7c4a-4bca-a997-945f3d60cf4e" 
 }
 
 ###Durable HTTP starter for SQL dedicated pool pause
