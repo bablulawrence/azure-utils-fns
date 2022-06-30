@@ -6,3 +6,6 @@ azure-synapse-artifacts
 azure-mgmt-synapse
 azure-mgmt-resourcegraph
 pyapacheatlas
+pyodbc
+azure-mgmt-compute
+azure-mgmt-resource
