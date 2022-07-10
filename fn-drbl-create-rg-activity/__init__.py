@@ -15,8 +15,7 @@ def main(params: Params) -> str:
     subscription_id, resource_group_name, location, usage, msxEngagementId = params    
     if (subscription_id and resource_group_name and location and usage and msxEngagementId):
         try: 
-            cred = DefaultAzureCredential()
-            logging.error("subscription_id :" + subscription_id)
+            cred = DefaultAzureCredential() 
             resource_client = ResourceManagementClient(cred, subscription_id)
             rg_result = resource_client.resource_groups.create_or_update(
                     resource_group_name,

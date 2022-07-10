@@ -9,3 +9,4 @@ pyapacheatlas
 pyodbc
 azure-mgmt-compute
 azure-mgmt-resource
+azure-cosmos

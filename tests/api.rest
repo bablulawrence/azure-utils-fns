@@ -10,11 +10,18 @@ Content-Type: application/json
 POST {{funcUrl}}/api/orchestrators/fn-drbl-create-resources-orchstr?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
-{  
-  "resourceGroupName" : "az-poc-ba1189-rg",
-  // "location" : "southcentralus",
-  "usage": "poc",
-  "msxEngagementId": "7-00012312312"
+{
+  "requestId" : "sdfd89181",  
+  "requestType" : "poc",
+  "msxEngagementId" : "7-00012312312",
+  "ownerName" : "Bablu Lawrence",
+  "ownerEmail" : "bablulawrence@gmail.com",
+  "consumption" : 2341,
+  "client": "Client1",
+  "teamEmails" : "bablulawrence@gmail.com;bablulawrence@gmail.com",    
+  "location" : "centralus",
+  "requestedDateTime" : "9/07/2021",
+  "approvedDateTime" : "9/07/2021"
 }
 
 ###Durable HTTP starter for database query
