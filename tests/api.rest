@@ -6,12 +6,25 @@ Content-Type: application/json
   "name": "Bablu"
 }
 
+###Get cosmos DB item
+GET  {{funcUrl}}/api/fn-get-cosmos-db-item?requestId=sdfd898191&ownerEmail=bablulawrence@gmail.com&code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+###Get cosmos DB item
+POST {{funcUrl}}/api/fn-get-cosmos-db-item?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "requestId" : "sdfd89819",
+  "ownerEmail" : "bablulawrence@gmail.com"  
+}
+
 ###Durable HTTP starter for create resources orchastrator
 POST {{funcUrl}}/api/orchestrators/fn-drbl-create-resources-orchstr?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
-  "requestId" : "sdfd89181",  
+  "requestId" : "sdfd89821",  
   "requestType" : "poc",
   "msxEngagementId" : "7-00012312312",
   "ownerName" : "Bablu Lawrence",
