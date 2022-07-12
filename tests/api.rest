@@ -6,12 +6,21 @@ Content-Type: application/json
   "name": "Bablu"
 }
 
+###Add AD Owner
+POST {{funcUrl}}/api/fn-add-ad-group-owner?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "groupId": "25a3d1d1-321a-42e8-a5fb-68e9ee653634",
+    "ownerId": "879dd507-9e19-43ca-b3f7-495290d63910"
+}
+
 ###List AD users
 POST {{funcUrl}}/api/fn-list-ad-users?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "upnList": ["v-balawrence","blawrence@mttech2021outlook.onmicrosoft.com"]
+    "upnList": ["v-jphil", "v-balawrence","blawrence@mttech2021outlook.onmicrosoft.com"]
 }
 
 ###Create AD Security Group
@@ -19,8 +28,8 @@ POST {{funcUrl}}/api/fn-create-ad-security-group?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "groupName": "az-poc-test-group1",
-    "groupDescription": "v-CSA Group for az-poc-test-group1"    
+    "groupName": "az-poc-test-group2",
+    "groupDescription": "v-CSA Group for az-poc-test-group2"    
 }
 
 ###Run CosmosDB query

@@ -8,6 +8,7 @@ def listUsers(upn, token):
     url = f"https://graph.microsoft.com/v1.0/users?$filter=startswith(userPrincipalName, '{upn}')"        
     headers =  {"Content-Type":"application/json", "Authorization": f"Bearer {token}"}
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     return response.json()['value']
     
 
