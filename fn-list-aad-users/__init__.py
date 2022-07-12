@@ -23,8 +23,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         upn_list = req_body.get('upnList')        
 
     user_list = []
-    token = DefaultAzureCredential().get_token('https://graph.microsoft.com/.default').token
     if (upn_list and isinstance(upn_list, list)):
+        token = DefaultAzureCredential().get_token('https://graph.microsoft.com/.default').token
         for upn in upn_list:
             try: 
                 user_list += listUsers(upn, token)
