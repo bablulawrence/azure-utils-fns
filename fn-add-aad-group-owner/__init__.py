@@ -13,16 +13,16 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     except ValueError:
         return func.HttpResponse('Invalid request body', status_code = 400)
     else:
-        groupId = req_body.get('groupId')
-        ownerId = req_body.get('ownerId')
+        group_id = req_body.get('groupId')
+        owner_id = req_body.get('ownerId')
    
-    if (groupId and ownerId):
+    if (group_id and owner_id):
+        token = DefaultAzureCredential().get_token('https://graph.microsoft.com/.default').token
         try: 
-            url = f"https://graph.microsoft.com/v1.0/groups/{groupId}/owners/$ref"
-            token = DefaultAzureCredential().get_token('https://graph.microsoft.com/.default').token
+            url = f"https://graph.microsoft.com/v1.0/groups/{group_id}/owners/$ref"
             headers =  {"Content-Type":"application/json", "Authorization": f"Bearer {token}"}
             body = {
-                "@odata.id": f"https://graph.microsoft.com/v1.0/users/{ownerId}"                
+                "@odata.id": f"https://graph.microsoft.com/v1.0/users/{owner_id}"                
             }
             response = requests.post(url, data=json.dumps(body), headers=headers)
             response.raise_for_status()
