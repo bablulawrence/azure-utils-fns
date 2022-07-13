@@ -3,7 +3,7 @@ import requests
 import logging
 from azure.identity import DefaultAzureCredential
 
-def main(groupDetails):
+def main(params):
     logging.info('Starting execution function')   
        
     try: 
@@ -11,9 +11,9 @@ def main(groupDetails):
         token = DefaultAzureCredential().get_token('https://graph.microsoft.com/.default').token
         headers =  {"Content-Type":"application/json", "Authorization": f"Bearer {token}"}
         body = {
-            "displayName": groupDetails['groupName'],
-            "mailNickname": groupDetails['groupName'],
-            "description": groupDetails['groupDesc'],
+            "displayName": params['groupName'],
+            "mailNickname": params['groupName'],
+            "description": params['groupDesc'],
             "securityEnabled": True,
             "mailEnabled": False,
             "groupTypes": []

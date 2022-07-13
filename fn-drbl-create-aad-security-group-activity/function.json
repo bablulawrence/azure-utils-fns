@@ -2,7 +2,7 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "name": "groupDetails",
+      "name": "params",
       "type": "activityTrigger",
       "direction": "in"
     }
