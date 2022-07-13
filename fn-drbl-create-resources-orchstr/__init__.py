@@ -68,10 +68,17 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
                     'approvedDateTime': params['approvedDateTime'],
                     'createdDateTime': datetime.utcnow().strftime("%Y/%m/%d, %H:%M:%S")
                 }
+    
+    aad_group_details = {        
+       'groupName' : f"az-{request_type}-{params['requestId']}-group",
+       'groupDesc' : f"Security group for {request_type}, request id : {params['requestId']}"        
+    }
 
-    db_result = yield context.call_activity('fn-drbl-create-cosmosdb-item-activity', req_params)
-    rg_params = rgParams(subscription_id, rg_name, location, request_type, msx_engmt_id )
-    rg_result = yield context.call_activity('fn-drbl-create-rg-activity', rg_params)
-    return [ db_result, rg_result]
+    # db_result = yield context.call_activity('fn-drbl-create-cosmosdb-item-activity', req_params)
+    # add_group_result = yield context.call_activity('fn-drbl-create-aad-security-group-activity', aad_group_details)
+    # rg_params = rgParams(subscription_id, rg_name, location, request_type, msx_engmt_id )
+    # rg_result = yield context.call_activity('fn-drbl-create-rg-activity', rg_params)
+    # return [ db_result, rg_result]
+    return [ add_group_result ]
 
 main = df.Orchestrator.create(orchestrator_function)
