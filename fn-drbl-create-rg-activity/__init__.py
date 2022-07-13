@@ -2,7 +2,7 @@ import logging
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.resource import ResourceManagementClient
 
-def main(params) -> str:
+def main(params) -> dict:
     logging.info('Starting execution of the activity function')   
     try: 
         cred = DefaultAzureCredential() 
