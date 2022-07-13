@@ -3,26 +3,42 @@ import logging
 import json
 import os
 from collections import namedtuple
+from re import A
+from tokenize import group
 from urllib import response
 from datetime import datetime
 import uuid 
 import azure.durable_functions as df
 
-
-rgParams = namedtuple('rgParams', [ 'subscriptionId',
-                                'resourceGroupName', 
-                                'location',
-                                'requestType', 
-                                'msxEngagementId'])
 # def getRequestId():    
-#     # return uuid.uuid4().hex[:6]    
+#     # return uuid.uuid4().hex[:6]   
+
+def getUserIds(teamEmails):
+    if (teamEmails):
+        emailList = teamEmails.split(';')
+        userIdList = []
+        for email in emailList:
+            x = email.split('@')            
+            userIdList.append(x[0])
+        return list(set(userIdList))
+    else:
+        return []
+
+def getAadUserObjectIds(aadUsersList):
+    if (aadUsersList):
+        userAadObjectIds = []
+        for user in aadUsersList:
+            userAadObjectIds.append(user['id'])
+        return userAadObjectIds
+    else:
+        return []     
+
 
 def orchestrator_function(context: df.DurableOrchestrationContext):
     logging.info("Starting execution of orchastrator function")
 
     #Get parameters from input
-    params = context.get_input()
-    # request_id = getRequestId()
+    params = context.get_input()    
     subscription_id = os.environ['AZURE_SUBSCRIPTION_ID']
     
     if ('requestType' in params):
@@ -52,33 +68,66 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
     else: 
         location = "centralus"
     
-    req_params = { 
-                    'id': params['requestId'],
-                    'requestType': request_type,
-                    'msxEngagementId' : msx_engmt_id,
-                    'ownerName': params['ownerName'],
-                    'ownerEmail': params['ownerEmail'],
-                    'consumption': params['consumption'],
-                    'client': client,
-                    'teamEmails': params['teamEmails'],
-                    'subscriptionId': subscription_id,
-                    'resourceGroupName': rg_name,
-                    'location': location,
-                    'requestedDateTime': params['requestedDateTime'],
-                    'approvedDateTime': params['approvedDateTime'],
-                    'createdDateTime': datetime.utcnow().strftime("%Y/%m/%d, %H:%M:%S")
-                }
     
-    aad_group_details = {        
+    get_aad_owner_result = yield context.call_activity('fn-drbl-list-aad-users-activity', { 'upnList': [ f"{params['ownerEmail']}"] })    
+    if (get_aad_owner_result):
+        owner = get_aad_owner_result[0]
+    # logging.warning(owner)
+
+    userIdList = getUserIds(params['teamEmails'])
+    # logging.warning(userIdList)
+    if (userIdList):
+        get_aad_users_result = yield context.call_activity('fn-drbl-list-aad-users-activity', { 'upnList': userIdList } )
+        # logging.warning(get_aad_users_result[0])
+    else: 
+        get_aad_users_result = None
+    
+    create_aad_group_params = {        
        'groupName' : f"az-{request_type}-{params['requestId']}-group",
        'groupDesc' : f"Security group for {request_type}, request id : {params['requestId']}"        
     }
+    create_aad_group_result = yield context.call_activity('fn-drbl-create-aad-security-group-activity', create_aad_group_params)
 
-    # db_result = yield context.call_activity('fn-drbl-create-cosmosdb-item-activity', req_params)
-    # add_group_result = yield context.call_activity('fn-drbl-create-aad-security-group-activity', aad_group_details)
-    # rg_params = rgParams(subscription_id, rg_name, location, request_type, msx_engmt_id )
-    # rg_result = yield context.call_activity('fn-drbl-create-rg-activity', rg_params)
-    # return [ db_result, rg_result]
-    return [ add_group_result ]
+    # logging.warn(create_aad_group_result)
+    add_aad_owner_params = {
+        'groupId' : create_aad_group_result['id'],
+        'ownerId' : owner['id']
+    }    
+    add_aad_owner_result = yield context.call_activity('fn-drbl-add-aad-group-owner-activity', add_aad_owner_params)
+    
+    add_aad_members_params = {
+        'groupId' : create_aad_group_result['id'],
+        'memberIdList' : getAadUserObjectIds(get_aad_users_result)
+    }
+    add_aad_members_result = yield context.call_activity('fn-drbl-add-aad-group-members-activity', add_aad_members_params)
+
+    create_rg_params = {
+        'subscriptionId' : subscription_id,
+        'resourceGroupName': rg_name,
+        'location': location,
+        'requestType': request_type,
+        'msxEngagementId' : msx_engmt_id
+    }
+    create_rg_result = yield context.call_activity('fn-drbl-create-rg-activity', create_rg_params)
+    
+    req_params = { 
+                'id': params['requestId'],
+                'requestType': request_type,
+                'msxEngagementId' : msx_engmt_id,
+                'ownerName': params['ownerName'],
+                'ownerEmail': params['ownerEmail'],
+                'consumption': params['consumption'],
+                'client': client,
+                'teamEmails': params['teamEmails'],
+                'subscriptionId': subscription_id,
+                'resourceGroupName': rg_name,
+                'location': location,
+                'requestedDateTime': params['requestedDateTime'],
+                'approvedDateTime': params['approvedDateTime'],
+                'createdDateTime': datetime.utcnow().strftime("%Y/%m/%d, %H:%M:%S")
+            }    
+    db_result = yield context.call_activity('fn-drbl-create-cosmosdb-item-activity', req_params)
+    
+    return [ create_aad_group_result, add_aad_owner_result, add_aad_members_result, create_rg_result, db_result ]
 
 main = df.Orchestrator.create(orchestrator_function)
