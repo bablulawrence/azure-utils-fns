@@ -20,7 +20,7 @@ POST {{funcUrl}}/api/fn-add-aad-group-owner?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "groupId": "69cd7beb-fcc0-4b63-b527-eac2f66ca98c",
+    "groupId": "0b8d125a-6fad-438b-925b-2dd1a3cc4621",
     "ownerId": "9fa7127d-a3d1-4d70-b448-185089a5d2da"
 }
 
@@ -37,7 +37,7 @@ POST {{funcUrl}}/api/fn-list-aad-users?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "upnList": ["v-a", "v-jphil", "v-balawrence","blawrence@mttech2021outlook.onmicrosoft.com"]
+    "upnList": [ "v-balawrence","blawrence@mttech2021outlook.onmicrosoft.com"]
 }
 
 ###Create AD Security Group
@@ -45,8 +45,8 @@ POST {{funcUrl}}/api/fn-create-aad-security-group?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "groupName": "az-poc-test-group4",
-    "groupDescription": "v-CSA Group for az-poc-test-group4"    
+    "groupName": "az-poc-test-group5",
+    "groupDescription": "v-CSA Group for az-poc-test-group5"    
 }
 
 ###Run CosmosDB query
@@ -75,14 +75,14 @@ POST {{funcUrl}}/api/orchestrators/fn-drbl-create-resources-orchstr?code={{funcK
 Content-Type: application/json
 
 {
-  "requestId" : "sdfd89821",  
+  "requestId" : "sdfd89828",  
   "requestType" : "poc",
   "msxEngagementId" : "7-00012312312",
   "ownerName" : "Bablu Lawrence",
-  "ownerEmail" : "bablulawrence@gmail.com",
+  "ownerEmail" : "v-balawrence",
   "consumption" : 2341,
   "client": "Client1",
-  "teamEmails" : "bablulawrence@gmail.com;bablulawrence@gmail.com",    
+  "teamEmails" : "v-balawrence@microsoft.com;v-jphilipose;bablulawrence@gmail.com;bablulawrence@gmail.com",    
   "location" : "centralus",
   "requestedDateTime" : "9/07/2021",
   "approvedDateTime" : "9/07/2021"

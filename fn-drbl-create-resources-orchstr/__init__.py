@@ -109,6 +109,22 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
         'msxEngagementId' : msx_engmt_id
     }
     create_rg_result = yield context.call_activity('fn-drbl-create-rg-activity', create_rg_params)
+        
+    create_owner_role_asgmt_params = {        
+        'subscriptionId' : subscription_id,
+        'roleDefinitionId': f"/subscriptions/{subscription_id}/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+        'principalId': owner['id'],
+        'scope': create_rg_result['id'],
+    }
+    create_role_asgmt_result = yield context.call_activity('fn-drbl-assign-rbac-role-activity', create_owner_role_asgmt_params)
+    
+    create_group_role_asgmt_params = {        
+        'subscriptionId' : subscription_id,
+        'roleDefinitionId': f"/subscriptions/{subscription_id}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+        'principalId': create_aad_group_result['id'],
+        'scope': create_rg_result['id'],
+    }
+    create_role_asgmt_result = yield context.call_activity('fn-drbl-assign-rbac-role-activity', create_group_role_asgmt_params)
     
     req_params = { 
                 'id': params['requestId'],
@@ -125,9 +141,10 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
                 'requestedDateTime': params['requestedDateTime'],
                 'approvedDateTime': params['approvedDateTime'],
                 'createdDateTime': datetime.utcnow().strftime("%Y/%m/%d, %H:%M:%S")
-            }    
+            }
     db_result = yield context.call_activity('fn-drbl-create-cosmosdb-item-activity', req_params)
     
-    return [ create_aad_group_result, add_aad_owner_result, add_aad_members_result, create_rg_result, db_result ]
+    return [ create_aad_group_result, add_aad_owner_result, add_aad_members_result, 
+            create_rg_result, create_role_asgmt_result, db_result ]
 
 main = df.Orchestrator.create(orchestrator_function)

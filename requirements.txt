@@ -9,5 +9,6 @@ pyapacheatlas
 pyodbc
 azure-mgmt-compute
 azure-mgmt-resource
+azure-mgmt-authorization
 azure-cosmos
 requests
