@@ -6,15 +6,86 @@ Content-Type: application/json
   "name": "Bablu"
 }
 
+###Add AD Members
+POST {{funcUrl}}/api/fn-add-aad-group-members?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "groupId": "f8d42891-3bd0-4c7f-970e-2e526d1b29eb",
+    "memberIdList": ["4aa4b930-2468-4bb8-9799-ba7a9d34215d", "83efc6a4-caf2-451b-bbca-ecbc061b9034"]
+}
+
+###Add AD Owner
+POST {{funcUrl}}/api/fn-add-aad-group-owner?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "groupId": "0b8d125a-6fad-438b-925b-2dd1a3cc4621",
+    "ownerId": "9fa7127d-a3d1-4d70-b448-185089a5d2da"
+}
+
+###List AD Groups
+POST {{funcUrl}}/api/fn-list-aad-groups?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "groupNameList": ["az-poc"]
+}
+
+###List AD users
+POST {{funcUrl}}/api/fn-list-aad-users?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "upnList": [ "v-balawrence","blawrence@mttech2021outlook.onmicrosoft.com"]
+}
+
+###Create AD Security Group
+POST {{funcUrl}}/api/fn-create-aad-security-group?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "groupName": "az-poc-test-group5",
+    "groupDescription": "v-CSA Group for az-poc-test-group5"    
+}
+
+###Run CosmosDB query
+POST {{funcUrl}}/api/fn-query-cosmos-db?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "query" : "SELECT * FROM r"  
+}
+
+###Get cosmos DB item
+GET  {{funcUrl}}/api/fn-get-cosmos-db-item?requestId=sdfd898191&ownerEmail=bablulawrence@gmail.com&code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+###Get cosmos DB item
+POST {{funcUrl}}/api/fn-get-cosmos-db-item?code={{funcKey}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "requestId" : "sdfd89819",
+  "ownerEmail" : "bablulawrence@gmail.com"  
+}
+
 ###Durable HTTP starter for create resources orchastrator
 POST {{funcUrl}}/api/orchestrators/fn-drbl-create-resources-orchstr?code={{funcKey}} HTTP/1.1
 Content-Type: application/json
 
-{  
-  "resourceGroupName" : "az-poc-ba1189-rg",
-  // "location" : "southcentralus",
-  "usage": "poc",
-  "msxEngagementId": "7-00012312312"
+{
+  "requestId" : "sdfd89828",  
+  "requestType" : "poc",
+  "msxEngagementId" : "7-00012312312",
+  "ownerName" : "Bablu Lawrence",
+  "ownerEmail" : "v-balawrence",
+  "consumption" : 2341,
+  "client": "Client1",
+  "teamEmails" : "v-balawrence@microsoft.com;v-jphilipose;bablulawrence@gmail.com;bablulawrence@gmail.com",    
+  "location" : "centralus",
+  "requestedDateTime" : "9/07/2021",
+  "approvedDateTime" : "9/07/2021"
 }
 
 ###Durable HTTP starter for database query
