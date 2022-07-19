@@ -1,13 +1,8 @@
-from http import client
 import logging
 import json
 import os
-from collections import namedtuple
-from re import A
-from tokenize import group
-from urllib import response
 from datetime import datetime
-import uuid 
+import time 
 import azure.durable_functions as df
 
 # def getRequestId():    
@@ -118,6 +113,7 @@ def orchestrator_function(context: df.DurableOrchestrationContext):
     }
     create_role_asgmt_result = yield context.call_activity('fn-drbl-assign-rbac-role-activity', create_owner_role_asgmt_params)
     
+    time.sleep(30)
     create_group_role_asgmt_params = {        
         'subscriptionId' : subscription_id,
         'roleDefinitionId': f"/subscriptions/{subscription_id}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
