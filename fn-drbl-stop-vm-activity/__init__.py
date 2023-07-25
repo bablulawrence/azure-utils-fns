@@ -17,6 +17,6 @@ def main(params: Params) -> str:
             return { "vm_name": vm_name, "vm_stop_status": result.status() }
         except Exception as e:
             logging.exception(e)
-            return { "vm_name": vm_name, "vm_stop_status": "Could not be stopped" }
+            return { "vm_name": vm_name, "vm_stop_status": "Running" }
     else:
         return 'One or more required parameters are missing'
